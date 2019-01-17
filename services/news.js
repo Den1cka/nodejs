@@ -1,32 +1,40 @@
 const news = [];
 
-module.exports.get = (id) => {
+function get(id) {
   const obj = news[id];
   if (obj === undefined) {
     throw new Error('Record does not exist!');
   }
   return obj;
-};
+}
 
-module.exports.getAll = () => news;
+function getAll() { return news; }
 
-module.exports.create = (obj) => {
+function create(obj) {
   const id = news.push(obj) - 1;
   return id;
-};
+}
 
-module.exports.update = (id, obj) => {
+function update(id, obj) {
   if (news[id] === undefined) {
     throw new Error('Record does not exist!');
   }
   news[id] = obj;
   return id;
-};
+}
 
-module.exports.delete = (id) => {
+function remove(id) {
   if (news[id] === undefined) {
     throw new Error('Record does not exist!');
   }
   news[id] = null;
   return id;
+}
+
+module.exports = {
+  get,
+  getAll,
+  create,
+  update,
+  remove,
 };

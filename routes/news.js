@@ -47,7 +47,7 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   let { params: { id } } = req;
   try {
-    id = service.delete(id);
+    id = service.remove(id);
     return res.json(id);
   } catch (err) {
     return next(err);
