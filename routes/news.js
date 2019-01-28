@@ -4,50 +4,50 @@ const service = require('../services/news');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const obj = service.getAll();
+    const obj = await service.getAllAsync();
     return res.json(obj);
   } catch (err) {
     return next(err);
   }
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   const { params: { id } } = req;
   try {
-    const obj = service.get(id);
+    const obj = await service.getAsync(id);
     return res.json(obj);
   } catch (err) {
     return next(err);
   }
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const obj = req.body;
   try {
-    const id = service.create(obj);
+    const id = await service.createAsync(obj);
     return res.json(id);
   } catch (err) {
     return next(err);
   }
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   let { params: { id } } = req;
   const obj = req.body;
   try {
-    id = service.update(id, obj);
+    id = await service.updateAsync(id, obj);
     return res.json(id);
   } catch (err) {
     return next(err);
   }
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   let { params: { id } } = req;
   try {
-    id = service.remove(id);
+    id = await service.removeAsync(id);
     return res.json(id);
   } catch (err) {
     return next(err);

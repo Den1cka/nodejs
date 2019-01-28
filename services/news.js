@@ -1,40 +1,34 @@
-const news = [];
+const { News } = require('../mongoose');
 
-function get(id) {
-  const obj = news[id];
-  if (obj === undefined) {
-    throw new Error('Record does not exist!');
-  }
-  return obj;
+async function getAsync(id) {
+  const result = await News.findById(id);
+  return result;
 }
 
-function getAll() { return news; }
-
-function create(obj) {
-  const id = news.push(obj) - 1;
-  return id;
+async function getAllAsync() {
+  const result = await News.find();
+  return result;
 }
 
-function update(id, obj) {
-  if (news[id] === undefined) {
-    throw new Error('Record does not exist!');
-  }
-  news[id] = obj;
-  return id;
+async function createAsync(obj) {
+  const result = await News.create(obj);
+  return result._id;
 }
 
-function remove(id) {
-  if (news[id] === undefined) {
-    throw new Error('Record does not exist!');
-  }
-  news[id] = null;
-  return id;
+async function updateAsync(id, obj) {
+  const result = await News.findByIdAndUpdate(id, obj);
+  return result._id;
+}
+
+async function removeAsync(id) {
+  const result = await News.findByIdAndRemove(id);
+  return result._id;
 }
 
 module.exports = {
-  get,
-  getAll,
-  create,
-  update,
-  remove,
+  getAsync,
+  getAllAsync,
+  createAsync,
+  updateAsync,
+  removeAsync,
 };
