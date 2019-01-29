@@ -10,6 +10,10 @@ mongoose.connect(config.mongoose.connection, {
 });
 
 const usersSchema = new mongoose.Schema({
+  email: String,
+  local: {
+    password: String,
+  },
   facebook: {
     type: {
       id: String,

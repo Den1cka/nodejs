@@ -1,5 +1,6 @@
 const express = require('express');
 
+const passport = require('../passport');
 const service = require('../services/news');
 
 const router = express.Router();
@@ -23,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
   const obj = req.body;
   try {
     const id = await service.createAsync(obj);
@@ -33,7 +34,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
   let { params: { id } } = req;
   const obj = req.body;
   try {
@@ -44,7 +45,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
   let { params: { id } } = req;
   try {
     id = await service.removeAsync(id);

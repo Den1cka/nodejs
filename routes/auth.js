@@ -3,15 +3,8 @@ const passport = require('../passport');
 
 const router = express.Router();
 
-router.get('/facebook', passport.authenticate('facebook'));
-
-router.get('/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/auth/success',
-  }));
-
-router.get('/success', async (req, res) => {
-  res.send('Authorization successfully done!');
-});
+router.post('/local/login', passport.authenticate('local', { session: false }), (req, res) => { res.send({ token: req.user }); });
+router.get('/facebook/login', passport.authenticate('facebook', { session: false, scope: ['email'] }));
+router.get('/facebook/callback', passport.authenticate('facebook', { session: false, scope: ['email'] }), (req, res) => { res.send({ token: req.user }); });
 
 module.exports = router;
